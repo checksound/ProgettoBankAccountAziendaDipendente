@@ -1,5 +1,7 @@
 package org.example.advanced;
 
+import org.example.utils.RandomGen;
+
 public class Bancomat extends Thread {
     private BankAccount bankAccount;
     public Bancomat(BankAccount bankAccount) {

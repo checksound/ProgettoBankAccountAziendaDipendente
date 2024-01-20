@@ -1,4 +1,4 @@
-package org.example.base;
+package org.example.start;
 
 import org.example.utils.RandomGen;
 
