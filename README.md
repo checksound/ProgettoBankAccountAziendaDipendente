@@ -18,13 +18,54 @@ Partire con un bilancio iniziale di 1000€ e stampare il saldo del conto al ter
 dei due thread.
 Quale sarà il risultato?
 
+## Versione start
+
+Classe applicazione, [org.example.start.Applicazione](./src/main/java/org/example/base/Application.java),
+i thread [org.example.start.Azienda](./src/main/java/org/example/base/Azienda.java) e
+[org.example.start.Bancomat](./src/main/java/org/example/base/Bancomat.java),
+e la classe dell'account,
+[org.example.start.BankAccount](./src/main/java/org/example/base/BankAccount.java), condiviso tra i due thread.
+
+```java
+package org.example.start;
+
+public class BankAccount {
+    private int livelloConto;
+
+    public BankAccount() {
+    }
+
+    public BankAccount(int startLivelloConto) {
+        deposita(startLivelloConto);
+    }
+
+    public void deposita(int quantita) {
+        this.livelloConto += quantita;
+    }
+
+    public int prelava(int quantita) {
+        this.livelloConto -= quantita;
+        return this.livelloConto;
+    }
+
+    public synchronized int getLivelloConto() {
+        return livelloConto;
+    }
+
+}
+```
+Provando più volte l'esecuzione si può notare che il livello conto finale non è 1000 come ci si dovrebbe 
+aspettare ma a volte è inferiore o superiore. 
+
+Come fa alcune volte a terminare con un livello conto 0 e alcune volte 2000? 
+
 ## Versione base
 
 Classe applicazione, [org.example.base.Applicazione](./src/main/java/org/example/base/Application.java),
 i thread [org.example.base.Azienda](./src/main/java/org/example/base/Azienda.java) e
 [org.example.base.Bancomat](./src/main/java/org/example/base/Bancomat.java), 
 e la classe dell'account, 
-[org.example.base.BankAccount](./src/main/java/org/example/base/BankAccount.java), condiviso tra i due thread.
+[org.example.base.BankAccount](./src/main/java/org/example/base/BankAccount.java), condiviso tra i due thread. 
 
 ```java
 package org.example.base;
@@ -56,10 +97,11 @@ public class BankAccount {
 ```
 
 Eseguendo l'esempio si può vedere che può seccedere che venda prelevato da BankAccount anche se 
-sul conto non c'è disponibilità mandando il conto in negativo. Come fare per evitare questo, cioè che il thread Bancomat aspetti a prelevare 
-finchè sul conto c'è disponibilità?
+sul conto non c'è disponibilità mandando il conto in negativo. Come fare per evitare questo, 
+cioè che il thread Bancomat aspetti a prelevare finché sul conto c'è nuovamente disponibilità?
 
-La versione sotto utilizza wait() e notify() per sincronizzare l'accesso al BanckAccount.
+La versione sotto (avanzata) utilizza `wait()` e `notify()` per sincronizzare l'accesso 
+all'oggeto condiviso di tipo `BanckAccount`.
 
 ## Versione avanzata
 
@@ -103,4 +145,8 @@ public class BankAccount {
 
 }
 ```
+
+In questo modo se il thread consumatore se cerca di prelevare i 1000 euro ma trova il livello del conto 
+a 0 non preleva ma aspetta finché il produttore non deposita i 1000 euro. A questo punto il 
+thread consumatore ritenta il prelievo.
 

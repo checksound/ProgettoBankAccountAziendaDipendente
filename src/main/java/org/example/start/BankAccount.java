@@ -3,7 +3,8 @@ package org.example.start;
 public class BankAccount {
     private int livelloConto;
 
-    public BankAccount() {}
+    public BankAccount() {
+    }
 
     public BankAccount(int startLivelloConto) {
         deposita(startLivelloConto);

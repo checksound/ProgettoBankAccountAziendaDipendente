@@ -3,7 +3,8 @@ package org.example.advanced;
 public class BankAccount {
     private int livelloConto;
 
-    public BankAccount() {}
+    public BankAccount() {
+    }
 
     public BankAccount(int startLivelloConto) {
         deposita(startLivelloConto);
@@ -15,7 +16,7 @@ public class BankAccount {
     }
 
     public synchronized int prelava(int quantita) {
-        while(this.livelloConto<quantita) {
+        while (this.livelloConto < quantita) {
             try {
                 wait();
             } catch (InterruptedException e) {
