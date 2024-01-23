@@ -54,7 +54,7 @@ public class BankAccount {
 
 }
 ```
-Provando più volte l'esecuzione si può notare che il livello conto finale non è 1000 come ci si dovrebbe 
+Provando più volte l'esecuzione si può notare che **ALCUNE VOLTE** il livello conto finale non è 1000 come ci si dovrebbe 
 aspettare ma a volte è inferiore o superiore. 
 
 Come fa alcune volte a terminare con un livello conto 0 e alcune volte 2000? 
