@@ -59,7 +59,22 @@ aspettare ma a volte è inferiore o superiore.
 
 Come fa alcune volte a terminare con un livello conto 0 e alcune volte 2000? 
 
+Vediamo un flusso d'esecuzione che può portare a un risultato non corretto quando due thread
+accedono a una variabile condivisa per modificarla: un thread incrementa di 1000 il `livelloConto` 
+mentre l'altro lo decrementa di 1000. Alla fine dell'esecuzione dei due thread il `livelloConto` 
+dovrebbe rimanere invariato.
+
+![](./BankAccount.bmp)
+
 ## Versione base
+
+La soluzione è sincronizzare l'accesso alla variabile condivisa tramite metodi `synchronized`: 
+in questo modo un solo thread alla volta può eseguire l'operazione `increment` o `decrement`. 
+
+Nella figura sotto si vede la differenza tra l'accesso alla variabile condivisa, se la variabile ha
+metodi `synchronized` o no.
+
+![](./BankAccount2.bmp)
 
 Classe applicazione, [org.example.base.Applicazione](./src/main/java/org/example/base/Application.java),
 i thread [org.example.base.Azienda](./src/main/java/org/example/base/Azienda.java) e
